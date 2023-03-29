@@ -24,7 +24,7 @@ pipe = StableDiffusionControlNetPipeline.from_pretrained(
 pipe.scheduler = UniPCMultistepScheduler.from_config(pipe.scheduler.config)
 pipe.enable_model_cpu_offload()
 
-def creat_image(input_image):
+def creat_image(input_image, caption):
     # 1. 이미지 로드
     image = load_image(input_image)
     # image.show()
@@ -43,8 +43,14 @@ def creat_image(input_image):
 
     # 3. Canny Edge 조건으로 새로운 이미지 생성
     prompt = "drawing simply and lighthearted paintings"
+    # prompt = "drawing midjourney or webui"
+    # prompt = "drawing like midjourney"
+    # prompt = "drawing make it colorful"
+    print("======================")
+    print(caption)
+    prompt = "{caption} Drawing high quality, photorealistic, sharp focus, depth of field"
     num_steps = 20
-    seed = 1
+    seed = 0
 
     out_image = pipe(
         prompt,
