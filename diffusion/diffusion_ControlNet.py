@@ -48,7 +48,7 @@ def creat_image(input_image, caption):
     # prompt = "drawing make it colorful"
     print("======================")
     print(caption)
-    prompt = "{caption} Drawing high quality, photorealistic, sharp focus, depth of field"
+    prompt = f"{caption}, high quality, photorealistic, sharp focus, depth of field"
     num_steps = 20
     seed = 0
 
