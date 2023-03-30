@@ -19,6 +19,9 @@ import json
 import time
 import multiprocessing
 
+# import gc
+# import GPUtil
+
 app = FastAPI()
 pool = multiprocessing.Pool(processes=3)
 
@@ -56,11 +59,15 @@ async def image(image: UploadFile = Form(...)):
     # diffusion 이후 그림 파일 저장
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"diffusion/{current_time}.png"
+    # GPUtil.showUtilization()
     res.save(filename)
 
     # Read the saved image file
     with open(filename, "rb") as f:
         img_bytes = f.read()
+
+    # gc.collect()
+    # torch.cuda.empty_cache()
 
     # Create a streaming response
     return StreamingResponse(
