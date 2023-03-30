@@ -8,6 +8,8 @@ from diffusers import StableDiffusionControlNetPipeline, ControlNetModel
 from diffusers import UniPCMultistepScheduler
 import torch
 
+# import GPUtil
+# from numba import cuda
 
 controlnet_model = "lllyasviel/sd-controlnet-canny"
 sd_model = "runwayml/stable-diffusion-v1-5"
@@ -52,6 +54,9 @@ def creat_image(input_image, caption):
     num_steps = 20
     seed = 0
 
+    # device = cuda.get_current_device()
+    # device.reset()
+    # GPUtil.showUtilization()
     out_image = pipe(
         prompt,
         num_inference_steps=num_steps,
