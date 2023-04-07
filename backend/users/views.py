@@ -187,5 +187,5 @@ class UserDrawingsListAPI(ListAPIView):
     serializer_class = NovelContentImageOnlySerializer
 
     def get_queryset(self):
-        queryset = self.queryset.filter(novel_content__novel__author=self.request.user)
+        queryset = self.queryset.filter(novel_content__novel__author=self.request.user).order_by('-id')
         return queryset
