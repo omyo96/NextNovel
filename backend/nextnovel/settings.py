@@ -54,7 +54,7 @@ if DEV == 'TRUE':
     ]
 
 else:
-    DEBUG = True
+    DEBUG = False
     USE_X_FORWARDED_HOST = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     ALLOWED_HOSTS = ['j8a502.p.ssafy.io']
