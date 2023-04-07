@@ -258,6 +258,7 @@ Repository
 - [중간 발표 자료](docs/서울_5반_A502_중간발표자료.pptx)
 - [최종 발표 자료](docs/서울_5반_A502_최종발표자료.pptx)
 - [UCC 영상](docs/특화PJT_서울_5반_A502_UCC경진대회.mp4)
+- [시연 영산](docs/NextNovel_시연영상.mp4)
 
 ## 🎲 Next Novel 서비스 화면
 ### 랜딩
