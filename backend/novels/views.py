@@ -164,7 +164,7 @@ class NovelLikeAPI(CreateAPIView):
     serializer_class = NovelLikeSerializer
     lookup_url_kwarg = 'novel_id'
     throttle_classes = [LikeRateThrottle]
-
+    permission_classes = [IsAuthenticated]
     def get_novel(self):
         novel = Novel.objects.get(pk=self.kwargs.get('novel_id'))
         return novel
