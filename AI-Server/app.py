@@ -11,13 +11,17 @@ from fastapi.responses import StreamingResponse
 
 from gpt import run_openai_chatbot as chatbot
 import caption
-from diffusion import diffusion_ControlNet
+# from diffusion import diffusion_ControlNet
+from diffusion import creat_image
 from caption import inference_caption
 import torch
 import googletrans
 import json
 import time
 import multiprocessing
+
+import requests
+from io import BytesIO
 
 translator = googletrans.Translator()
 app = FastAPI()
@@ -158,12 +162,6 @@ async def image(image: UploadFile = Form(...)):
     # en_word : 이미지캡셔닝 단어(영어)
     en_string = replace_word(inference_caption(image_bytes))
     print(f"캡셔닝 문장 : {en_string}")
-    # question = f'"{en_string}"\nInterpret this sentence and tell me in one word what object you drew'
-
-    # start = time.time()
-    # en_word, new_history = chatbot(question, [])
-    # print(f"캡셔닝 단어 : {en_word}")
-    # print(time.time() - start)
 
     # diffusion 이전 그림 파일 저장
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -171,14 +169,20 @@ async def image(image: UploadFile = Form(...)):
     img.save(filename)
 
     start = time.time()
-    res = diffusion_ControlNet.creat_image(filename, en_string)
+
+    # res = diffusion_ControlNet.creat_image(filename, en_string)
     # res = img
+    res = creat_image(filename, en_string)
     print(time.time()-start)
+    uri = res[1]
+    response = requests.get(uri)
+    img_data = BytesIO(response.content)
+    img = Image.open(img_data)
 
     # diffusion 이후 그림 파일 저장
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     filename = f"diffusion/{current_time}.png"
-    res.save(filename)
+    img.save(filename)
 
     # Read the saved image file
     with open(filename, "rb") as f:
